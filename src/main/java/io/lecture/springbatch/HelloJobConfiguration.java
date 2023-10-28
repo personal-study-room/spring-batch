@@ -13,7 +13,7 @@ import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-@Configuration
+//@Configuration
 @RequiredArgsConstructor
 public class HelloJobConfiguration {
 
@@ -31,21 +31,18 @@ public class HelloJobConfiguration {
     @Bean
     public Step helloStep1() {
         return stepBuilderFactory.get("helloStep1")
-                .tasklet(new Tasklet() {
-                    @Override
-                    public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
+                .tasklet((contribution, chunkContext) -> {
 
-                        System.out.println("=========================");
-                        System.out.println(" >> Hello Spring Batch!!");
-                        System.out.println("=========================");
+                    System.out.println("=========================");
+                    System.out.println(" >> Hello Spring Batch!!");
+                    System.out.println("=========================");
 
-                        /*
-                        tasklet 은 기본적으로 1번 또는 n번 실행 가능
-                        내가 정의한 tasklet을 한번 실행하기 위해서
-                        return RepeatStatus.FINISHED 를 사용한다.
-                        */
-                        return RepeatStatus.FINISHED;
-                    }
+                    /*
+                    tasklet 은 기본적으로 1번 또는 n번 실행 가능
+                    내가 정의한 tasklet을 한번 실행하기 위해서
+                    return RepeatStatus.FINISHED 를 사용한다.
+                    */
+                    return RepeatStatus.FINISHED;
                 })
                 .build();
     }
